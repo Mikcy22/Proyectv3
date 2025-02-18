@@ -15,24 +15,39 @@
         android:id="@+id/todos"
         android:name="com.micky.proyectv3.ui.todos.TodosFragment"
         android:label="Videojuegos"
-        tools:layout="@layout/fragment_todos" />
+        tools:layout="@layout/fragment_todos">
+        <action
+            android:id="@+id/action_nav_home_to_todos"
+            app:destination="@id/todos" />
+    </fragment>
 
     <fragment
         android:id="@+id/deportes"
         android:name="com.micky.proyectv3.ui.deportes.DeportesFragment"
         android:label="Deportes"
-        tools:layout="@layout/fragment_deportes" />
+        tools:layout="@layout/fragment_deportes">
+        <action
+            android:id="@+id/action_nav_home_to_deportes"
+            app:destination="@id/deportes" />
+    </fragment>
 
     <fragment
         android:id="@+id/arcade"
         android:name="com.micky.proyectv3.ui.arcade.ArcadeFragment"
         android:label="Arcade"
-        tools:layout="@layout/fragment_arcade" />
+        tools:layout="@layout/fragment_arcade">
+        <action
+            android:id="@+id/action_nav_home_to_arcade"
+            app:destination="@id/arcade" />
+    </fragment>
 
     <fragment
         android:id="@+id/accion"
         android:name="com.micky.proyectv3.ui.accion.AccionFragment"
         android:label="Accion"
-        tools:layout="@layout/fragment_slideshow" />
-
+        tools:layout="@layout/fragment_slideshow">
+        <action
+            android:id="@+id/action_nav_home_to_accion"
+            app:destination="@id/accion" />
+    </fragment>
 </navigation>

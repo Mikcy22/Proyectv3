@@ -1,4 +1,3 @@
-
 package com.micky.proyectv3
 
 import android.content.Intent
@@ -12,53 +11,75 @@ import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_login) // Asegúrate de que el XML es el correcto
 
-        val correo = findViewById<EditText>(R.id.usernameInput)
-        val pass = findViewById<EditText>(R.id.passwordInput)
-        val boton_login = findViewById<Button>(R.id.loginButton)
-        val boton_crear_cuenta = findViewById<Button>(R.id.registerButton)
+        auth = FirebaseAuth.getInstance()
 
-        boton_login.setOnClickListener {
+        val usernameInput = findViewById<EditText>(R.id.usernameInput)
+        val passwordInput = findViewById<EditText>(R.id.passwordInput)
+        val loginButton = findViewById<Button>(R.id.loginButton)
+        val registerButton = findViewById<Button>(R.id.registerButton)
+        val forgotPasswordButton = findViewById<Button>(R.id.forgotPasswordLink)
 
-                if(pass.text.toString()!=""){
+        // Iniciar sesión
+        loginButton.setOnClickListener {
+            val email = usernameInput.text.toString().trim()
+            val password = passwordInput.text.toString().trim()
 
-                    if(correo.text.toString()!="" && Patterns.EMAIL_ADDRESS.matcher(correo.text.toString()).matches()){
-                            login_firebase(correo.text.toString(), pass.text.toString())
-                    }else{
-                        Toast.makeText(applicationContext, "Escriba un correo valido", Toast.LENGTH_SHORT).show()
-                    }
-
-                }else{
-                    Toast.makeText(applicationContext, "Escriba la contraseña", Toast.LENGTH_SHORT).show()
-                }
-
+            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Ingrese un correo válido", Toast.LENGTH_SHORT).show()
+            } else if (password.isEmpty()) {
+                Toast.makeText(this, "Ingrese su contraseña", Toast.LENGTH_SHORT).show()
+            } else {
+                loginUser(email, password)
+            }
         }
 
-        boton_crear_cuenta.setOnClickListener {
-            DialogoCrearCuenta().show(supportFragmentManager,null)
-
+        // Abrir diálogo de registro
+        registerButton.setOnClickListener {
+            val dialog = DialogoCrearCuenta()
+            dialog.show(supportFragmentManager, "DialogoCrearCuenta")
         }
 
-
+        // Restaurar contraseña
+        forgotPasswordButton.setOnClickListener {
+            val email = usernameInput.text.toString().trim()
+            if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Ingrese un correo válido", Toast.LENGTH_SHORT).show()
+            } else {
+                resetPassword(email)
+            }
+        }
     }
 
-    fun login_firebase(correo:String, pass:String) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(correo, pass)
-            .addOnCompleteListener(this) { task ->
+    // Función para iniciar sesión
+    private fun loginUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-
-                    var intent = Intent(this, MainActivity::class.java)
-                    intent.putExtra("Correo", task.result.user?.email.toString())
-                    intent.putExtra("Proveedor", "usuario/contraseña")
+                    Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, MainActivity::class.java) // Redirige a otra pantalla
                     startActivity(intent)
+                    finish() // Cierra la actividad actual
                 } else {
-                    Toast.makeText(applicationContext, "Usuario o la contraseña no registrado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error en el inicio de sesión", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    // Función para restaurar la contraseña
+    private fun resetPassword(email: String) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Correo de recuperación enviado", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Error al enviar el correo", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 }
-
-
