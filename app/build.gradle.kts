@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+
     id("com.google.gms.google-services")
 }
 
@@ -55,15 +56,15 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("com.squareup.picasso:picasso:2.71828")
 
     implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-storage")
 
-    implementation("com.github.bumptech.glide:glide:4.16.0") // Versión más reciente
 
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0") // Solo si usas anotaciones
-
-    implementation("androidx.recyclerview:recyclerview:1.2.1")  // Asegúrate de tener esta dependencia
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
 }

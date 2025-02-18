@@ -11,6 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.micky.proyectv3.databinding.ActivityMainBinding
 
@@ -29,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         // Inicializar FirebaseAuth 🔥
         auth = FirebaseAuth.getInstance()
+        FirebaseApp.initializeApp(this)
 
         navigationView = findViewById(R.id.nav_view) // ID de tu NavigationView en activity_main.xml
 
@@ -73,7 +76,16 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        // Obtener referencia al FloatingActionButton
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+
+        fab.setOnClickListener {
+            val dialog = AddVideojuegoDialogFragment()
+            dialog.show(supportFragmentManager, "AddVideojuegoDialog")
+        }
     }
+
 
     // Función para cerrar sesión
     private fun cerrarSesion() {

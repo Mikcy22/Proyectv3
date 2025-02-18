@@ -1,45 +1,46 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Nombre del videojuego -->
     <EditText
         android:id="@+id/editTextNombre"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:hint="Nombre del videojuego"
         android:inputType="text" />
 
+    <!-- Descripción del videojuego -->
     <EditText
         android:id="@+id/editTextDescripcion"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Descripción"
+        android:layout_height="wrap_content"
+        android:hint="Descripción del videojuego"
         android:inputType="text" />
 
-    <EditText
-        android:id="@+id/editTextImagen"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Nombre del recurso de la imagen"
-        android:inputType="text" />
-
+    <!-- Categoría del videojuego -->
     <EditText
         android:id="@+id/editTextCategoria"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:hint="Categoría"
+        android:layout_height="wrap_content"
+        android:hint="Categoría del videojuego"
         android:inputType="text" />
 
-    <Button
-        android:id="@+id/btnAgregar"
+    <!-- URL de la imagen -->
+    <EditText
+        android:id="@+id/editTextImagenUrl"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/black"
-        android:text="Agregar"
-        android:textColor="@color/white" />
+        android:layout_height="wrap_content"
+        android:hint="URL de la imagen"
+        android:inputType="textUri" />
 
+    <!-- Botón para añadir -->
+    <Button
+        android:id="@+id/btnAnadir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Añadir videojuego" />
 </LinearLayout>
