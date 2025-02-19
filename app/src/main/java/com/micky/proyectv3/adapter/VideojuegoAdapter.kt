@@ -53,8 +53,6 @@ class VideojuegoAdapter(
             }
 
 
-
-
             binding.btnModificar.setOnClickListener { onModifyClick(videojuego) }  // 👈 Ahora maneja modificación
             //binding.btnEliminar.setOnClickListener { onDeleteClick(videojuego) }
 

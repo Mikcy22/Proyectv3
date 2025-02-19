@@ -16,20 +16,22 @@ class VideojuegoController : ViewModel() {
     // Cargar videojuegos desde Firebase
     fun cargarVideojuegos() {
         db.collection("videojuegos")
-            .get()
-            .addOnSuccessListener { result ->
+            .addSnapshotListener { result, exception ->
+                if (exception != null) {
+                    println("Error al obtener videojuegos: $exception")
+                    return@addSnapshotListener
+                }
+
                 val listaVideojuegos = mutableListOf<Videojuego>()
-                for (document in result) {
+                for (document in result!!) {
                     val vj = document.toObject(Videojuego::class.java)
-                    vj.id = document.id  // Asignar el ID obtenido de Firestore
+                    vj.id = document.id  // Asignar ID desde Firestore
                     listaVideojuegos.add(vj)
                 }
-                _videojuegos.value = listaVideojuegos
-            }
-            .addOnFailureListener { exception ->
-                // Manejar el error
+                _videojuegos.value = listaVideojuegos  // ⚡ Actualiza en tiempo real
             }
     }
+
 
 
     // Método para agregar un nuevo videojuego a Firestore

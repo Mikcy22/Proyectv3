@@ -57,8 +57,12 @@ class TodosFragment : Fragment() {
         }
 
         // Cargar los videojuegos desde Firebase
-        videojuegoController.cargarVideojuegos()
+        //videojuegoController.cargarVideojuegos()
+        // Asignar el adaptador al RecyclerView
+        binding.recyclerView.adapter = videojuegoAdapter
 
+        // Cargar los videojuegos
+        videojuegoController.cargarVideojuegos()
         return root
     }
 
