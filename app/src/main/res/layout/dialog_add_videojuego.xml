@@ -21,7 +21,8 @@
         android:hint="Descripción del videojuego"
         android:inputType="text" />
 
-    <!-- Categoría del videojuego -->
+    <!-- Categoría del videojuego-->
+
     <EditText
         android:id="@+id/editTextCategoria"
         android:layout_width="match_parent"

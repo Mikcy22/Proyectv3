@@ -33,6 +33,48 @@ class VideojuegoController : ViewModel() {
     }
 
 
+    /*
+    fun cargarVideojuegosAccion() {
+        db.collection("videojuegos")
+            .whereEqualTo("categoria", "Accion") // Filtrar por categoría
+            .addSnapshotListener { result, exception ->
+                if (exception != null) {
+                    Log.e("Firestore", "Error al obtener videojuegos de acción: $exception")
+                    return@addSnapshotListener
+                }
+
+                val listaVideojuegos = mutableListOf<Videojuego>()
+                for (document in result!!) {
+                    val vj = document.toObject(Videojuego::class.java)
+                    vj.id = document.id  // Asignar ID desde Firestore
+                    listaVideojuegos.add(vj)
+                }
+                _videojuegos.value = listaVideojuegos  // Actualiza en tiempo real
+            }
+    }*/
+
+
+    fun cargarVideojuegosCategoria(categoria: String){
+        db.collection("videojuegos")
+            .whereEqualTo("categoria", categoria) // Filtrar por categoría
+            .addSnapshotListener { result, exception ->
+                if (exception != null) {
+                    Log.e("Firestore", "Error al obtener videojuegos de acción: $exception")
+                    return@addSnapshotListener
+                }
+
+                val listaVideojuegos = mutableListOf<Videojuego>()
+                for (document in result!!) {
+                    val vj = document.toObject(Videojuego::class.java)
+                    vj.id = document.id  // Asignar ID desde Firestore
+                    listaVideojuegos.add(vj)
+                }
+                _videojuegos.value = listaVideojuegos  // Actualiza en tiempo real
+            }
+    }
+
+
+
 
     // Método para agregar un nuevo videojuego a Firestore
     fun añadirVideojuego(videojuego: Videojuego) {
